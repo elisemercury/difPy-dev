@@ -35,6 +35,13 @@ difPy searches for images in **one or more different folders**, compares the ima
 
 difPy does not compare images based on their hashes. It compares them based on their tensors i. e. the image content - this allows difPy to **not only search for duplicate images, but also for similar images**.
 
+## Table of Contents
+1. [Basic Usage](https://github.com/elisemercury/Duplicate-Image-Finder#basic-usage)
+2. [Output](https://github.com/elisemercury/Duplicate-Image-Finder#output)
+3. [Additional Parameters](https://github.com/elisemercury/Duplicate-Image-Finder#additional-parameters)
+4. [CLI Usage](https://github.com/elisemercury/Duplicate-Image-Finder#cli-usage)
+5. [difPy Web App](https://github.com/elisemercury/Duplicate-Image-Finder#difpy-web-app)
+
 ## Basic Usage
 To make difPy search for duplicates **within one folder**:
 
@@ -89,21 +96,29 @@ search.stats
 
 > Output:
 {"directory" : ("C:/Path/to/Folder_A/", "C:/Path/to/Folder_B/", ... ),
- "duration" : {"start_date" : "2023-02-15",
-               "start_time" : "18:44:19",
-               "end_date" : "2023-02-15",
-               "end_time" : "18:44:38",
-               "seconds_elapsed" : 18.6113},
- "fast_search" : True,
- "recursive" : True,
- "match_mse" : 0,
- "px_size" : 50,
- "files_searched" : 1032,
- "matches_found" : {"duplicates" : 52, 
-                    "similar" : 0},
- "invalid_files" : {"count" : 4},
- "deleted_files" : {"count" : 0},
- "skipped_files" : {"count" : 0}}
+ "process" : {"build" : {"duration" : {"start" : "2023-08-27T22:41:42.741440",
+                                      "end" : "2023-08-27T22:42:45.781104",
+                                      "seconds_elapsed" : "0.185" #todo
+                                      },
+                        "parameters" : {"recursive" : True,
+                                        "in_folder" : False,
+                                        "limit_extensions" : True,
+                                        "px_size" : 50
+                                        }
+                        },
+              "search" : {"duration" : {"start" : "2023-08-27T22:41:42.741440",
+                                       "end" : "2023-08-27T22:42:45.781104",
+                                       "seconds_elapsed" : "0.185" #todo
+                                       },
+                          "parameters" : {"similarity_mse" : 0,
+                                         }
+                          "files_searched" : 537,
+                          "matches_found" : {"duplicates" : 5,
+                                             "similar" : 0}
+                         }
+              }
+"invalid_files" : {'count' : 5,
+                   'logs' : {...}}})
 ```
 
 ## Additional Parameters
