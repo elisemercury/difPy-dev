@@ -98,25 +98,18 @@ search.stats
 {"directory" : ("C:/Path/to/Folder_A/", "C:/Path/to/Folder_B/", ... ),
  "process" : {"build" : {"duration" : {"start" : "2023-08-27T22:41:42.741440",
                                       "end" : "2023-08-27T22:42:45.781104",
-                                      "seconds_elapsed" : "0.185" #todo
-                                      },
+                                      "seconds_elapsed" : "0.185"},
                         "parameters" : {"recursive" : True,
                                         "in_folder" : False,
                                         "limit_extensions" : True,
-                                        "px_size" : 50
-                                        }
-                        },
+                                        "px_size" : 50}},
               "search" : {"duration" : {"start" : "2023-08-27T22:41:42.741440",
                                        "end" : "2023-08-27T22:42:45.781104",
-                                       "seconds_elapsed" : "0.185" #todo
-                                       },
-                          "parameters" : {"similarity_mse" : 0,
-                                         }
+                                       "seconds_elapsed" : "0.185"},
+                          "parameters" : {"similarity_mse" : 0}
                           "files_searched" : 537,
                           "matches_found" : {"duplicates" : 5,
-                                             "similar" : 0}
-                         }
-              }
+                                             "similar" : 0}}}
 "invalid_files" : {'count' : 5,
                    'logs' : {...}}})
 ```
