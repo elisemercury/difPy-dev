@@ -106,7 +106,7 @@ from difPy.actions import delete
 delete(search, silent_del=False)
 ```
 
-### 3. Statistics
+### III. Statistics
 
 A **JSON formatted collection** with statistics on the completed difPy processes:
 
@@ -151,21 +151,21 @@ difPy.search(difpy_obj, similarity='duplicates', show_progress=False, logs=True)
 difPy can also be invoked through the CLI by using the following commands:
 
 ```python
-python dif.py # working directory
+python dif.py #working directory
 
 python dif.py -D "C:/Path/to/Folder/"
 
 python dif.py -D "C:/Path/to/Folder_A/" "C:/Path/to/Folder_B/" "C:/Path/to/Folder_C/"
 ```
 
-> :point_right: Windows users can add difPy to their [PATH system variables](https://www.computerhope.com/issues/ch000549.htm) by pointing it to their difPy package installation folder containing the `difPy.bat` file.
+> :point_right: Windows users can add difPy to their [PATH system variables](https://www.computerhope.com/issues/ch000549.htm) by pointing it to their difPy package installation folder containing the `difPy.bat` file. This adds `difPy` as a command in your CLI and will allow direct invocation of `difPy` from anywhere on your device.
 
 difPy CLI supports the following arguments:
 
 ```python
 dif.py [-h] [-D DIRECTORY] [-Z OUTPUT_DIRECTORY] [-r {True,False}] [-s SIMILARITY] [-px PX_SIZE] 
-       [-mv MOVE_TO] [-le {True,False}] [-p {True,False}] [-o {True,False}][-d {True,False}] 
-       [-sd {True,False}] [-l {True,False}]
+       [-mv MOVE_TO] [-le {True,False}] [-p {True,False}] [-d {True,False}] [-sd {True,False}] 
+       [-l {True,False}]
 ```
 
 | | Parameter | | Parameter |
@@ -177,7 +177,9 @@ dif.py [-h] [-D DIRECTORY] [-Z OUTPUT_DIRECTORY] [-r {True,False}] [-s SIMILARIT
 | `-px` | px_size | `-l` | logs |
 | `-le` | limit_extensions |  | |
 
-When running from the CLI, the output of difPy is  written to files and saved in the working directory by default. To change the default output directory, specify the `-Z / -output_directory` parameter. The "xxx" in the output filenames is the current timestamp:
+When no directory parameter is given in the CLI, difPy will **run on the current working directory**.
+
+When running from the CLI, the output of difPy is written to files and **saved in the working directory** by default. To change the default output directory, specify the `-Z / -output_directory` parameter. The "xxx" in the output filenames is the current timestamp:
 
 ```python
 difPy_xxx_results.json
