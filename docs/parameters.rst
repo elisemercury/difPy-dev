@@ -33,6 +33,29 @@ build
    :ref:`silent_del`,``bool``,``False``,"``True`` (use with care, cannot be undone)"
    :ref:`logs`,``bool``,``False``,``True``
 
+directory
+^^^^^^^^^^^^
+
+difPy supports single and multi-folder search.
+
+For a detailed guide on how set the directory parameter for each use case, please refer to the :ref:`usage` section.
+
+.. _fast_search:
+
+.. _recursive:
+
+recursive
+^^^^^^^^^^^^
+
+By default, difPy will search for duplicate images  recursively within the subfolders of the directory specified in the :ref:`directory` parameter. If set to ``False``, subfolders will not be scanned.
+
+``True`` = (default) searches recursively through all subfolders in the directory paths
+
+``False`` = disables recursive search through subfolders in the directory paths
+
+.. _similarity:
+
+
 
 .. _difPy.search:
 
@@ -43,47 +66,10 @@ search
 
 ### TODO
 
-
-
-directory
-------------
-
-difPy supports single and multi-folder search.
-
-For a detailed guide on how set the directory parameter for each use case, please refer to the :ref:`usage` section.
-
-.. _fast_search:
-
-fast_search
-------------
-
-.. note::
-
-   🆕 difPy >= v3.x supports Fast Search Algorithm (FSA).
-
-By default, when searching for duplicates, difPy will run the comparison process by using its :ref:`Fast Search Algorithm (FSA)`. This algorithm can provide significant performance increases and time complexity reduction. 
-
-FSA can only be leveraged when searching for duplicates, not for similar images. Therefore, it will only be enabled if the :ref:`similarity` parameter is set to ``"duplicates"`` or if it is manually set to ``0``. Even if ``fast_search`` is set to ``True``, as long as the :ref:`similarity` parameter does not comply with the above requirements, FSA will be disabled by difPy, as it might otherwise lead to inaccurate results.
-
-``True`` = (default) uses difPy's Fast Search Algorithm (FSA)
-
-``False`` = uses difPy's regular search algorithm
-
-.. _recursive:
-
-recursive
-------------
-
-By default, difPy will search for duplicate images  recursively within the subfolders of the directory specified in the :ref:`directory` parameter. If set to ``False``, subfolders will not be scanned.
-
-``True`` = (default) searches recursively through all subfolders in the directory paths
-
-``False`` = disables recursive search through subfolders in the directory paths
-
 .. _similarity:
 
 similarity
-------------
+^^^^^^^^^^^^
 
 Depending on which use case you want to apply difPy for, the granularity for the classification of images can be adjusted.
 
@@ -98,7 +84,7 @@ difPy can f. e. search for exact matching duplicate images or search for images 
 .. _px_size:
 
 px_size
-------------
+^^^^^^^^^^^^
 
 .. note::
 
@@ -113,7 +99,7 @@ By default, ``px_size`` is set to ``50``.
 .. _limit_extensions:
 
 limit_extensions
-------------
+^^^^^^^^^^^^
 
 By default, difPy will try to decode all the files in the given directory to check if they are images. This is a very precise option, but consumes more time. To **speed up difPy** and limit it to decode only predefined image types, set ``limit_extensions`` to ``True``.
 
@@ -128,24 +114,13 @@ By default, difPy will try to decode all the files in the given directory to che
 .. _show_progress:
 
 show_progress
-------------
+^^^^^^^^^^^^
 
 By default, difPy will show a progress bar of the running process.
 
 ``True`` = (default) displays the progress bar
 
 ``False`` = disables the progress bar
-
-.. _show_output:
-
-show_output
-------------
-
-By default, difPy will output its search result data as described under section :ref:`output`. Matched images can also be display in the console output by setting ``show_output`` to ``True``.
-
-``False`` = (default) output as in section :ref:`output`
-
-``True`` = displays the matched images and their filename in the console output
 
 .. _move_to:
 
@@ -178,7 +153,7 @@ The images are deleted based on the ``lower_quality`` output as described under 
 .. _silent_del:
 
 silent_del
-------------
+^^^^^^^^^^^^
 
 .. note::
 
