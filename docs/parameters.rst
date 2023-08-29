@@ -44,7 +44,7 @@ difPy supports single and multi-folder search.
    dif = difPy.build("C:/Path/to/Folder/")
    search = difPy.search(dif)
 
-**Multi-Folder Search**:
+**Multi Folder Search**:
 
 .. code-block:: python
 

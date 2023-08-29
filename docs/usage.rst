@@ -20,12 +20,14 @@ To use difPy, first install it using pip:
 
    (.venv) $ pip install difPy
 
+View difPy on `PyPi <https://pypi.org/project/difPy/>`_.
+
 .. _usage:
 
 Basic Usage
 ----------------
 
-difPy supports searching for duplicates and similar images within a single or multiple directories. difPy first needs to be initialized and build it's image repository with ``difPy.build``. After the ``dif object`` had been created, by applying ``difPy.search``, difPy starts the search for matching images. 
+difPy supports searching for duplicate and similar images within a single or multiple directories. difPy first needs to be initialized and build its image repository with ``:ref:`difPy.build```. After the ``dif object`` had been created, by applying ``difPy.search``, difPy starts the search for matching images. 
 
 Single Folder Search
 ^^^^^^^^^^
@@ -38,7 +40,7 @@ Search for duplicate images in a single folder:
    dif = difPy.build("C:/Path/to/Folder/")
    search = difPy.search(dif)
 
-Multi-Folder Search
+Multi Folder Search
 ^^^^^^^^^^
 
 Search for duplicate images in multiple folders:
@@ -81,7 +83,7 @@ difPy can be invoked through a CLI interface by using the following commands:
 
 .. note::
 
-   Windows users can add difPy to their [PATH system variables](https://www.computerhope.com/issues/ch000549.htm) by pointing it to their difPy package installation folder containing the [`difPy.bat`](https://github.com/elisemercury/Duplicate-Image-Finder/difPy/difPy.bat) file. This adds `difPy` as a command in the CLI and will allow direct invocation of `difPy` from anywhere on the device. The default difPy installation folder will look similar to `C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\difPy` (Windows 11).
+   Windows users can add difPy to their `PATH system variables <https://www.computerhope.com/issues/ch000549.htm>`_ by pointing it to their difPy package installation folder containing the `difPy.bat <https://github.com/elisemercury/Duplicate-Image-Finder/difPy/difPy.bat>`_ file. This adds ``difPy`` as a command in the CLI and will allow direct invocation of difPy from anywhere on the machine. The default difPy installation folder will look similar to ``C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\difPy`` (Windows 11).
 
 It supports the following arguments:
 
@@ -171,7 +173,7 @@ Or **deleted**:
 
 .. _Process Statistics:
 
-Process Statistics
+III. Process Statistics
 ^^^^^^^^^^
 
 A **JSON formatted collection** with statistics on the completed difPy process:
@@ -199,17 +201,8 @@ A **JSON formatted collection** with statistics on the completed difPy process:
     "invalid_files" : {"count" : 230,
                        "logs" : {...}}}
 
-.. _Supported File Types:
 
-Supported File Types
-----------------
-
-difPy supports most popular image formats. Nevertheless, since it relies on the Pillow library for image decoding, the supported formats are restricted to the ones listed in the `Pillow Documentation`_. Unsupported file types will by marked as invalid and included in the :ref:`Process Statistics` output under ``invalid_files``.
-
-.. _Pillow Documentation: https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html
-
-
-.. _Usage Samples:
+.. _Usage Examples:
 
 Usage Samples
 ----------------
