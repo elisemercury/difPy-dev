@@ -4,7 +4,7 @@ Parameters
 .. _parameters:
 .. _difPy.build:
 
-build
+difPy.build
 ------------
 
 `difPy.build`
@@ -122,7 +122,7 @@ By default, difPy will show a progress bar of the running process.
 .. _logs:
 
 logs
-------------
+^^^^^^^^^^^^
 
 By default, difPy outputs ``search.stats`` statistics after each process, as described in :ref:`Process Statistics`. 
 
@@ -130,7 +130,7 @@ To skip the creation of stats, set ``logs`` to ``False``.
 
 .. _difPy.search:
 
-search
+difPy.search
 ------------
 
 After the difPy object has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. After its invocation, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
@@ -179,7 +179,7 @@ By default, difPy will show a progress bar of the running process.
 .. _logs:
 
 logs
-------------
+^^^^^^^^^^^^
 
 By default, difPy outputs ``search.stats`` statistics after each process, as described in :ref:`Process Statistics`. 
 
@@ -187,7 +187,7 @@ To skip the creation of stats, set ``logs`` to ``False``.
 
 .. _move_to:
 
-move_to
+search.move_to
 ------------
 
 difPy can automatically move the lower quality duplicate/similar images it found to another directory (see :ref:`output`). Images can be moved by invoking ``move_to`` on a difPy search object.
@@ -200,7 +200,7 @@ difPy can automatically move the lower quality duplicate/similar images it found
    search.move_to(search, destination_path="C:/Path/to/Destination/")
 
    > output
-      Moved 756 files(s) to "C:\Users\elise\Pictures\Move To"
+      Moved 756 files(s) to "C:/Path/to/Move_To"
 
 
 The images are moved based on the ``lower_quality`` output as described under section :ref:`output`.
@@ -211,7 +211,7 @@ The images are moved based on the ``lower_quality`` output as described under se
 
 .. _delete:
 
-delete
+search.delete
 ------------
 
 .. note::
