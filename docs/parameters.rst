@@ -7,11 +7,11 @@ Parameters
 difPy.build
 ------------
 
-`difPy.build`
+Before difPy can perform any search, it needs to build it's image repository and transform the images in the provided directory into tensors. This is what is done when ``difPy.build()`` is invoked.
 
-Before difPy can perform any search, it needs to build it's image repository and transform the images in the provided directory into tensors. This is what is done when `difPy.build()` is invoked.
+Upon completion, ``difPy.build()`` returns a ``difPy object`` that can be used in :ref:`difPy.search` to start the search process.
 
-`difPy.build` supports the following parameters:
+``difPy.build`` supports the following parameters:
 
 .. code-block:: python
 
@@ -59,11 +59,11 @@ Folder paths can be specified as standalone Python strings, or within a list.
 recursive
 ^^^^^^^^^^^^
 
-By default, difPy will search for matching images recursively within the subfolders of the directories specified in the :ref:`directory` parameter. If set to ``False``, subfolders will not be scanned.
+By default, difPy will search for matching images recursively within the subdirectories of the subdirectories specified in the :ref:`directory` parameter. If set to ``False``, subdirectories will not be scanned.
 
-``True`` = (default) searches recursively through all subfolders in the directory paths
+``True`` = (default) searches recursively through all subdirectories in the directory paths
 
-``False`` = disables recursive search through subfolders in the directory paths
+``False`` = disables recursive search through subdirectories in the directory paths
 
 in_folder
 ^^^^^^^^^^^^
@@ -133,10 +133,13 @@ To skip the creation of stats, set ``logs`` to ``False``.
 difPy.search
 ------------
 
-After the difPy object has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. After its invocation, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
+After the ``difPy object`` has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. 
+
+When invoking ``difPy.search()``, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
+
+After the search is completed, further actions can be performed using :ref:`search.move_to` and :ref:`search.delete`.
 
 `difPy.search` supports the following parameters:
-
 
 .. csv-table::
    :header: Parameter,Input Type,Default Value,Other Values
@@ -147,6 +150,17 @@ After the difPy object has been built using difPy.:ref:`difPy.build`, the search
    :ref:`similarity`,"``str``, ``int``",``'duplicates'``, "``'similar'``, any ``int`` or ``float``"
    :ref:`show_progress`,``bool``,``True``,``False``
    :ref:`logs`,``bool``,``True``,``False``
+
+.. code-block:: python
+
+   difPy.search(difPy_obj, similarity='duplicates', show_progress=False, logs=True)
+
+.. _difPy_obj:
+
+difPy_obj
+^^^^^^^^^^^^
+
+The required ``difPy_obj`` parameter should be pointing to the ``difPy object`` that was built during the invocation of :ref:`difPy.build`. 
 
 .. _similarity:
 
@@ -185,40 +199,47 @@ By default, difPy outputs ``search.stats`` statistics after each process, as des
 
 To skip the creation of stats, set ``logs`` to ``False``.
 
-.. _move_to:
+.. _search.move_to:
 
 search.move_to
 ------------
 
-difPy can automatically move the lower quality duplicate/similar images it found to another directory (see :ref:`output`). Images can be moved by invoking ``move_to`` on a difPy search object.
+difPy can automatically move the lower quality duplicate/similar images it found to another directory. Images can be moved by invoking ``move_to`` on the difPy search:
 
 .. code-block:: python
 
    import difPy
    dif = difPy.build("C:/Path/to/Folder_A/")
    search = difPy.search(dif)
-   search.move_to(search, destination_path="C:/Path/to/Destination/")
+   search.move_to(destination_path="C:/Path/to/Destination/")
 
-   > output
-      Moved 756 files(s) to "C:/Path/to/Move_To"
+.. code-block:: python
 
+   > Output
+   Moved 756 files(s) to "C:/Path/to/Destination"
 
-The images are moved based on the ``lower_quality`` output as described under section :ref:`output`.
-
-``None`` = (default) images are not moved
-
-``"C:/Path/to/Destination/"`` = moves the lower quality image files to the destination folder
-
-.. _delete:
+.. _search.delete:
 
 search.delete
 ------------
+
+difPy can automatically delete the lower quality duplicate/similar images it found. Images can be deleted by invoking ``delete`` on the difPy search:
 
 .. note::
 
    Please use with care, as this cannot be undone.
 
-When set to ``True``, the lower quality duplicate/similar image(s) that were found by difPy are deleted from the folder(s).
+.. code-block:: python
+
+   import difPy
+   dif = difPy.build("C:/Path/to/Folder_A/")
+   search = difPy.search(dif)
+   search.delete()
+
+.. code-block:: python
+
+   > Output
+   Deleted 756 files(s)
 
 The images are deleted based on the ``lower_quality`` output as described under section :ref:`output`. After auto-deleting the images, every match group will be left with one single image: the image with the highest quality among its match group.
 
@@ -233,4 +254,4 @@ silent_del
 
    Please use with care, as this cannot be undone.
 
-When set to ``True``, the user confirmation for :ref:`delete` is skipped and the lower resolution matched images that were found by difPy are automatically deleted from their folder(s).
+When set to ``True``, the user confirmation for :ref:`search.delete` is skipped and the lower resolution matched images that were found by difPy are automatically deleted from their folder(s).

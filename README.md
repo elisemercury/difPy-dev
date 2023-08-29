@@ -98,12 +98,12 @@ search.lower_quality
 Lower quality images then can be **moved** to a different location:
 
 ```python
-search.move_to(search, destination_path="C:/Path/to/Destination/")
+search.move_to(destination_path="C:/Path/to/Destination/")
 ```
 Or **deleted**:
 
 ```python
-search.delete(search, silent_del=False)
+search.delete(silent_del=False)
 ```
 
 ### III. Process Statistics
