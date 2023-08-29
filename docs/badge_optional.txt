@@ -1,0 +1,19 @@
+difPy Badge
+------------
+
+.. image:: https://img.shields.io/badge/dif-Py-blue?style=flat&logo=python&labelColor=white&logoWidth=20.svg/"
+
+logo=paypal
+
+https://img.shields.io/badge/Support-difPy-blue?style=flat&logo=paypal&labelColor=white&logoWidth=20.svg/
+
+You can make use of the official difPy badge by posting the following tag into your page's markdown:
+
+.. code-block:: console
+
+    <img src="https://img.shields.io/badge/dif-Py-blue?style=flat&logo=python&labelColor=white&logoWidth=20.svg/"></a>
+
+
+Support via Paypal or Revolut
+------------
+Support difPy on `PayPal <https://paypal.me/eliselandman>`_ or `Revolut <https://revolut.me/elisemercury>`_ 👐
