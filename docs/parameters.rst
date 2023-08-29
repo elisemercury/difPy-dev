@@ -9,7 +9,7 @@ difPy.build
 
 Before difPy can perform any search, it needs to build it's image repository and transform the images in the provided directory into tensors. This is what is done when ``difPy.build()`` is invoked.
 
-Upon completion, ``difPy.build()`` returns a ``difPy object`` that can be used in :ref:`difPy.search` to start the search process.
+Upon completion, ``difPy.build()`` returns a ``dif object`` that can be used in :ref:`difPy.search` to start the search process.
 
 ``difPy.build`` supports the following parameters:
 
@@ -128,12 +128,16 @@ By default, difPy outputs ``search.stats`` statistics after each process, as des
 
 To skip the creation of stats, set ``logs`` to ``False``.
 
+.. raw:: html
+
+   <hr>
+
 .. _difPy.search:
 
 difPy.search
 ------------
 
-After the ``difPy object`` has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. 
+After the ``dif object`` has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. 
 
 When invoking ``difPy.search()``, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
 
@@ -160,7 +164,7 @@ After the search is completed, further actions can be performed using :ref:`sear
 difPy_obj
 ^^^^^^^^^^^^
 
-The required ``difPy_obj`` parameter should be pointing to the ``difPy object`` that was built during the invocation of :ref:`difPy.build`. 
+The required ``difPy_obj`` parameter should be pointing to the ``dif object`` that was built during the invocation of :ref:`difPy.build`. 
 
 .. _similarity:
 
@@ -217,6 +221,17 @@ difPy can automatically move the lower quality duplicate/similar images it found
 
    > Output
    Moved 756 files(s) to "C:/Path/to/Destination"
+
+.. _destination_path:
+
+destination_path
+^^^^^^^^^^^^
+
+Directory of where the lower quality files should me moved. Should be given as Python ``string``.
+
+.. raw:: html
+
+   <hr>
 
 .. _search.delete:
 

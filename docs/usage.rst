@@ -25,7 +25,7 @@ To use difPy, first install it using pip:
 Basic Usage
 ----------------
 
-difPy supports searching for duplicates and similar images within a single or multiple directories. difPy first needs to be initialized and build it's image repository with `difPy.build()`. After the `dif` object had been created, by applying `difPy.search()`, difPy starts the search for matching images. 
+difPy supports searching for duplicates and similar images within a single or multiple directories. difPy first needs to be initialized and build it's image repository with ``difPy.build``. After the ``dif object`` had been created, by applying ``difPy.search``, difPy starts the search for matching images. 
 
 Single Folder Search
 ^^^^^^^^^^
@@ -58,9 +58,9 @@ or add a ``list`` of folders:
    search = difPy.search(dif)
 
 
-Folder paths must be specified as either standalone Python strings, or within a Python `list`. 
+Folder paths must be specified as either standalone Python strings, or in a Python list. 
 
-difPy can search for duplicates in the union of all folders, or only among the folders and subfolders itself. See :ref:`Usage Samples`.
+difPy can search for duplicates in the union of all folders, or only among the folders and subdirectories itself. See :ref:`Usage Samples`.
 
 By default, starting with v4.x, difPy uses **multiprocessing** for both the build and the search process.
 
@@ -108,7 +108,7 @@ It supports the following arguments:
 
 If no directory parameter is given in the CLI, difPy will **run on the current working directory**.
 
-When running from the CLI, the output of difPy is written to files and **saved in the working directory** by default. To change the default output directory, specify the `-Z / -output_directory` parameter. The "xxx" in the output filenames is the current timestamp:
+When running from the CLI, the output of difPy is written to files and **saved in the working directory** by default. To change the default output directory, specify the ``-Z / -output_directory`` parameter. The "xxx" in the output filenames is the current timestamp:
 
 .. code-block:: python
 
