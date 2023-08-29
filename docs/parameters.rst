@@ -7,13 +7,16 @@ Parameters
 build
 ------------
 
+`difPy.build`
+
+Before difPy can perform any search, it needs to build it's image repository and transform the images in the provided directory into tensors. This is what is done when `difPy.build()` is invoked.
+
 `difPy.build` supports the following parameters:
 
 .. code-block:: python
 
-   dif(directory*, fast_search=True, recursive=True, similarity='duplicates', px_size=50, move_to=None
-       limit_extensions=False, show_progress=True, show_output=False, delete=False, silent_del=False, 
-       logs=False)
+   difPy.build(*directory, recursive=True, in_folder=False, limit_extensions=True, 
+   px_size=50, show_progress=False, logs=True)
 
 .. csv-table::
    :header: Parameter,Input Type,Default Value,Other Values
@@ -21,65 +24,74 @@ build
    :class: tight-table
 
    :ref:`directory`,"``str``, ``list``",,
-   :ref:`fast_search`,``bool``,``True``,``False``
    :ref:`recursive`,``bool``,``True``,``False``
-   :ref:`similarity`,"``str``, ``int``",``'duplicates'``, "``'similar'``, any ``int`` or ``float``"
-   :ref:`px_size`,"``int``, ``float``",50,any ``int`` (not recommended to change default value)
-   :ref:`limit_extensions`,``bool``,``False``,``True``
+   :ref:`in_folder`,"``bool``, ``False``",``True``
+   :ref:`px_size`,"``int``, ``float``",50, any ``int`` (not recommended to change default value)
+   :ref:`limit_extensions`,``bool``,``True``,``False``
    :ref:`show_progress`,``bool``,``True``,``False``
-   :ref:`show_output`,``bool``,``False``,``True``
-   :ref:`move_to`,``str``,``None``,folder path as ``str``
-   :ref:`delete`,``bool``,``False``,"``True`` (use with care, cannot be undone)"
-   :ref:`silent_del`,``bool``,``False``,"``True`` (use with care, cannot be undone)"
-   :ref:`logs`,``bool``,``False``,``True``
+   :ref:`logs`,``bool``,``True``,``False``
 
 directory
 ^^^^^^^^^^^^
 
 difPy supports single and multi-folder search.
 
-For a detailed guide on how set the directory parameter for each use case, please refer to the :ref:`usage` section.
+**Single Folder Search**:
 
-.. _fast_search:
+.. code-block:: python
+
+   import difPy
+   dif = difPy.build("C:/Path/to/Folder/")
+   search = difPy.search(dif)
+
+**Multi-Folder Search**:
+
+.. code-block:: python
+
+   import difPy
+   dif = difPy.build(["C:/Path/to/Folder_A/", "C:/Path/to/Folder_B/", "C:/Path/to/Folder_C/", ... ])
+   search = difPy.search(dif)
+
+Folder paths can be specified as standalone Python strings, or within a list.
 
 .. _recursive:
 
 recursive
 ^^^^^^^^^^^^
 
-By default, difPy will search for duplicate images  recursively within the subfolders of the directory specified in the :ref:`directory` parameter. If set to ``False``, subfolders will not be scanned.
+By default, difPy will search for matching images recursively within the subfolders of the directories specified in the :ref:`directory` parameter. If set to ``False``, subfolders will not be scanned.
 
 ``True`` = (default) searches recursively through all subfolders in the directory paths
 
 ``False`` = disables recursive search through subfolders in the directory paths
 
-.. _similarity:
-
-
-
-.. _difPy.search:
-
-search
-------------
-
-`difPy.search` supports the following parameters:
-
-### TODO
-
-.. _similarity:
-
-similarity
+in_folder
 ^^^^^^^^^^^^
 
-Depending on which use case you want to apply difPy for, the granularity for the classification of images can be adjusted.
+By default, difPy will search for matches in the union of all directories specified in the :ref:`directory` parameter. To have difPy only search for matches within each folder separately, set ``in_folder`` to ``True``.
 
-difPy can f. e. search for exact matching duplicate images or search for images that are similar.
+``True`` = searches for matches only among each individual directory, including subdirectories
 
-``"duplicates"`` = (default) searches for duplicates. MSE threshold is set to ``0``.
+``False`` = (default) searches for matches in the union of all directories
 
-``"similar"`` = searches for similar images. MSE threshold is set to ``1000``.
+.. _limit_extensions:
 
-**Manual setting**: the match MSE threshold can be adjusted manually by setting ``similarity`` parmeter to any ``int`` or ``float``. difPy will then search for images that match an MSE threshold **equal to or lower than** the one specified.
+limit_extensions
+^^^^^^^^^^^^
+
+By default, difPy only searched for images with a predefined filetype. This speeds up the process, since difPy does not have to attempt to decode files it might not support. Nonetheless, you can let difPy try to decode other file types by setting ``limit_extensions`` to ``False``.
+
+.. note::
+
+   Predefined image types includes: ``apng``, ``bw``, ``cdf``, ``cur``, ``dcx``, ``dds``, ``dib``, ``emf``, ``eps``, ``fli``, ``flc``, ``fpx``, ``ftex``, ``fits``, ``gd``, ``gd2``, ``gif``, ``gbr``, ``icb``, ``icns``, ``iim``, ``ico``, ``im``, ``imt``, ``j2k``, ``jfif``, ``jfi``, ``jif``, ``jp2``, ``jpe``, ``jpeg``, ``jpg``, ``jpm``, ``jpf``, ``jpx``, ``jpeg``, ``mic``, ``mpo``, ``msp``, ``nc``, ``pbm``, ``pcd``, ``pcx``, ``pgm``, ``png``, ``ppm``, ``psd``, ``pixar``, ``ras``, ``rgb``, ``rgba``, ``sgi``, ``spi``, ``spider``, ``sun``, ``tga``, ``tif``, ``tiff``, ``vda``, ``vst``, ``wal``, ``webp``, ``xbm``, ``xpm``.
+
+``True`` = (default) difPy's search is limited to a set of predefined image types
+
+``False`` = difPy searches through all the input files
+
+difPy supports most popular image formats. Nevertheless, since it relies on the Pillow library for image decoding, the supported formats are restricted to the ones listed in the `Pillow Documentation`_. Unsupported file types will by marked as invalid and included in the :ref:`Process Statistics` output under ``invalid_files``.
+
+.. _Pillow Documentation: https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html
 
 .. _px_size:
 
@@ -90,26 +102,11 @@ px_size
 
    Recommended not to change default value.
 
-Absolute size in pixels (width x height) of the images before being compared. The higher the ``px_size``, the more computational resources and time required for difPy to compare the images. The lower the ``px_size``, the faster, but the more imprecise the comparison process gets.
+Absolute size in pixels (width x height) of the images before being compared. The higher the ``px_size``, the more precise the comparison, but in turn more computational resources are required for difPy to compare the images. The lower the ``px_size``, the faster, but the more imprecise the comparison process gets.
 
 By default, ``px_size`` is set to ``50``.
 
 **Manual setting**: ``px_size`` can be manually adjusted by setting it to any ``int``.
-
-.. _limit_extensions:
-
-limit_extensions
-^^^^^^^^^^^^
-
-By default, difPy will try to decode all the files in the given directory to check if they are images. This is a very precise option, but consumes more time. To **speed up difPy** and limit it to decode only predefined image types, set ``limit_extensions`` to ``True``.
-
-.. note::
-
-   Predefined image types includes: ``apng``, ``bw``, ``cdf``, ``cur``, ``dcx``, ``dds``, ``dib``, ``emf``, ``eps``, ``fli``, ``flc``, ``fpx``, ``ftex``, ``fits``, ``gd``, ``gd2``, ``gif``, ``gbr``, ``icb``, ``icns``, ``iim``, ``ico``, ``im``, ``imt``, ``j2k``, ``jfif``, ``jfi``, ``jif``, ``jp2``, ``jpe``, ``jpeg``, ``jpg``, ``jpm``, ``jpf``, ``jpx``, ``jpeg``, ``mic``, ``mpo``, ``msp``, ``nc``, ``pbm``, ``pcd``, ``pcx``, ``pgm``, ``png``, ``ppm``, ``psd``, ``pixar``, ``ras``, ``rgb``, ``rgba``, ``sgi``, ``spi``, ``spider``, ``sun``, ``tga``, ``tif``, ``tiff``, ``vda``, ``vst``, ``wal``, ``webp``, ``xbm``, ``xpm``.
-
-``False`` = (default) difPy searches through all the input files
-
-``True`` = difPy's search is limited to a set of predefined image types
 
 .. _show_progress:
 
@@ -122,12 +119,89 @@ By default, difPy will show a progress bar of the running process.
 
 ``False`` = disables the progress bar
 
+.. _logs:
+
+logs
+------------
+
+By default, difPy outputs ``search.stats`` statistics after each process, as described in :ref:`Process Statistics`. 
+
+To skip the creation of stats, set ``logs`` to ``False``.
+
+.. _difPy.search:
+
+search
+------------
+
+After the difPy object has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. After its invocation, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
+
+`difPy.search` supports the following parameters:
+
+
+.. csv-table::
+   :header: Parameter,Input Type,Default Value,Other Values
+   :widths: 10, 10, 10, 20
+   :class: tight-table
+
+   :ref:`difPy_obj`,"``difPy_obj``, ",,
+   :ref:`similarity`,"``str``, ``int``",``'duplicates'``, "``'similar'``, any ``int`` or ``float``"
+   :ref:`show_progress`,``bool``,``True``,``False``
+   :ref:`logs`,``bool``,``True``,``False``
+
+.. _similarity:
+
+similarity
+^^^^^^^^^^^^
+
+difPy compares the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
+
+``"duplicates"`` = (default) searches for duplicates. MSE threshold is set to ``0``.
+
+``"similar"`` = searches for similar images. MSE threshold is set to ``50``.
+
+Depending on which use case you want to apply difPy for, the granularity for the classification of images can be adjusted.
+
+**Manual setting**: the match MSE threshold can be adjusted manually by setting ``similarity`` parameter to any ``int`` or ``float``. difPy will then search for images that match an MSE threshold **equal to or lower than** the one specified.
+
+When searching for **similar** images, the choice of MSE threshold becomes very important. A threshold of ``50`` will usually find similarities in regular photographs well, but if applied to images containing different texts with a plain white background, the MSE threshold of ``50`` will usually be too high and difPy will consider all images to be similar, even though they are not. In this case, for more precision, the ``py_size`` value should be lowered.
+
+.. _show_progress:
+
+show_progress
+^^^^^^^^^^^^
+
+By default, difPy will show a progress bar of the running process.
+
+``True`` = (default) displays the progress bar
+
+``False`` = disables the progress bar
+
+.. _logs:
+
+logs
+------------
+
+By default, difPy outputs ``search.stats`` statistics after each process, as described in :ref:`Process Statistics`. 
+
+To skip the creation of stats, set ``logs`` to ``False``.
+
 .. _move_to:
 
 move_to
 ------------
 
-difPy can automatically move the lower quality duplicate/similar images it found to another directory. Images can be moved by setting ``move_to`` to a desired destination folder.
+difPy can automatically move the lower quality duplicate/similar images it found to another directory (see :ref:`output`). Images can be moved by invoking ``move_to`` on a difPy search object.
+
+.. code-block:: python
+
+   import difPy
+   dif = difPy.build("C:/Path/to/Folder_A/")
+   search = difPy.search(dif)
+   search.move_to(search, destination_path="C:/Path/to/Destination/")
+
+   > output
+      Moved 756 files(s) to "C:\Users\elise\Pictures\Move To"
+
 
 The images are moved based on the ``lower_quality`` output as described under section :ref:`output`.
 
@@ -160,31 +234,3 @@ silent_del
    Please use with care, as this cannot be undone.
 
 When set to ``True``, the user confirmation for :ref:`delete` is skipped and the lower resolution matched images that were found by difPy are automatically deleted from their folder(s).
-
-.. _logs:
-
-logs
-------------
-
-difPy outputs ``search.stats`` statistics after each process, as described in :ref:`output`. 
-
-For informative of troubleshooting purposes, the ``logs`` parameter can be set to ``True`` so that the ``.stats`` output contains more details around the ``invalid_files`` and the ``deleted_files`` during the process:
-
-.. code-block:: python
-
-   search.stats
-
-   > Output:
-   {...,
-   "invalid_files" : {"count" : 4,
-                      "logs" : {"C:/Path/to/Images/inv_file.pdf" : "UnidentifiedImageError: file could not be identified as image.",
-                                ... },
-   "deleted_files" : {"count" : 25,
-                      "logs" : ["C:/Path/to/Images/duplicate_image1.jpg", 
-                                "C:/Path/to/Images/duplicate_image2.jpg", 
-                                ... ]}}
-
-
-``False`` = (default) logs output are disabled
-
-``True`` = logs are enabled
