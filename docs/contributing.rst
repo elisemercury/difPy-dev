@@ -19,10 +19,13 @@ Contributions to difPy are always welcomed and are highly appreciated! If you wa
 
 Thank you for your contribution! 💐
 
-Guidelines - Become a difPy Contributor
+.. raw:: html
+
+   <hr>
+
 ------------
 
-To contribute to the source code of difPy, please follow the instructions:
+To contribute to the source code of difPy, please follow the guidelines below:
 
 1. Fork the difPy project repository.
 2. Clone your fork. Your fork on Github should be called the ``origin`` remote, the original difPy repository should be called the ``upstream`` remote.

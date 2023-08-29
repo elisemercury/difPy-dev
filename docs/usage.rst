@@ -27,7 +27,7 @@ View difPy on `PyPi <https://pypi.org/project/difPy/>`_.
 Basic Usage
 ----------------
 
-difPy supports searching for duplicate and similar images within a single or multiple directories. difPy first needs to be initialized and build its image repository with ``:ref:`difPy.build```. After the ``dif object`` had been created, by applying ``difPy.search``, difPy starts the search for matching images. 
+difPy supports searching for duplicate and similar images within a single or multiple directories. difPy first needs to be initialized and build its image repository with :ref:`difPy.build`. After the ``dif object`` had been created, by applying :ref:`difPy.search``, difPy starts the search for matching images. 
 
 Single Folder Search
 ^^^^^^^^^^
@@ -207,3 +207,32 @@ A **JSON formatted collection** with statistics on the completed difPy process:
 Usage Samples
 ----------------
 
+III. Single Folder Search
+^^^^^^^^^^
+
+In this example we have a directory ``"C:/Users/Pictures/difPy Test"`` with the following folder structure:
+
+.. code-block:: console
+
+   .
+   |- Folder1
+   |  |- image1.jpg
+   |  |- ...
+   |  |- imageN.jpg   
+   |- Folder2
+   |  |- image1.jpg
+   |  |- ...
+   |  |- imageN.jpg   
+   |- image1.jpg
+   |- ...
+   |- imageN.jpg
+
+It contains 2 subdirectories `Folder1` and `Folder2` and a few images (in our example we have a total of 22 images that include 7 pairs of duplicates) 
+
+We can run the following command to run difPy on the folder:
+
+.. code-block:: console
+
+   dif = difPy.build("C:/Users/elise/Pictures/difPy Test - Copy", in_folder=False)
+   search = difPy.search(dif, similarity="duplicates")
+   search.result

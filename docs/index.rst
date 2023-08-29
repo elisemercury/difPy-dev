@@ -10,7 +10,7 @@ difPy Usage Documentation
 
 .. note::
 
-   ✨ Update to **`difPy v4 <https://pypi.org/project/difPy/>`_** for up to **10x performance increases** to previous versions! :ref:`What's new in v4?`
+   ✨ Update to `difPy v4 <https://pypi.org/project/difPy/>`_ for up to **10x performance increases** to previous versions! :ref:`What's new in v4?`
 
 difPy searches for images in **one or more different folders**, compares the images it found and checks whether these are duplicates. It then outputs the **image files classified as duplicates** as well as the **images having the lowest resolutions**, so you know which of the duplicate images are safe to be deleted. You can then either delete them manually, or let difPy delete them for you.
 
