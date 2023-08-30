@@ -69,6 +69,8 @@ By default, difPy will search for matching images recursively within the subdire
 
 ``False`` = disables recursive search through subdirectories in the directory paths
 
+.. _in_folder:
+
 in_folder (bool)
 ^^^^^^^^^^^^
 

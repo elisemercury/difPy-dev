@@ -5,10 +5,6 @@ Using difPy
 
 **difPy** is a Python package that automates the search for duplicate/similar images.
 
-It searches for images in one (or more) different folder(s), compares the images it found and checks whether these are duplicate or similar images.
-
-difPy compares the images based on their tensors i. e. the image content. This approach is different to classic image hash comparison and allows difPy to **not only search for duplicate images, but also for similar images**.
-
 .. _installation:
 
 Installation
@@ -90,27 +86,26 @@ It supports the following arguments:
 .. code-block:: python
    
    dif.py [-h] [-D DIRECTORY [DIRECTORY ...]] [-Z OUTPUT_DIRECTORY] 
-         [-r {True,False}] [-i {True,False}] [-le {True,False}] 
-         [-px PX_SIZE] [-p {True,False}] [-s SIMILARITY] 
-         [-mv MOVE_TO] [-d {True,False}] [-sd {True,False}] 
-         [-l {True,False}]
+          [-r {True,False}] [-i {True,False}] [-le {True,False}] 
+          [-px PX_SIZE] [-p {True,False}] [-s SIMILARITY] 
+          [-mv MOVE_TO] [-d {True,False}] [-sd {True,False}] 
+          [-l {True,False}]
 
 .. csv-table::
    :header: Cmd,Parameter,Cmd,Parameter
    :widths: 5, 10, 5, 10
    :class: tight-table
 
-   ``-D``,directory,``-p``,show_progress
-   ``-Z``,output_directory,``-o``,show_output
+   ``-D``,directory,``-le``,limit_extensions
+   ``-Z``,output_directory,``-p``,show_progress
    ``-r``,recursive,``-mv``,move_to
    ``-i``,in_folder,``-d``,delete
    ``-s``,similarity,``-sd``,silent_del
    ``-px``,px_size,``-l``,logs
-   ``-le``,limit_extensions,,
 
 If no directory parameter is given in the CLI, difPy will **run on the current working directory**.
 
-When running from the CLI, the output of difPy is written to files and **saved in the working directory** by default. To change the default output directory, specify the ``-Z / -output_directory`` parameter. The "xxx" in the output filenames is the current timestamp:
+The output of difPy is written to files and **saved in the working directory** by default. To change the default output directory, specify the ``-Z / -output_directory`` parameter. The "xxx" in the output filenames is the current timestamp:
 
 .. code-block:: python
 
@@ -136,9 +131,9 @@ A **JSON formatted collection** of duplicates/similar images (i. e. **match grou
    > Output:
    {20220819171549 : {"location" : "C:/Path/to/Image/image1.jpg",
                       "matches" : {30270813251529 : "location": "C:/Path/to/Image/matched_image1.jpg",
-                                                   "mse": 0.0},
+                                                    "mse": 0.0},
                                   {72214282557852 : "location": "C:/Path/to/Image/matched_image2.jpg",
-                                                   "mse": 0.0},
+                                                    "mse": 0.0},
                       ... }
     ...
    }
@@ -200,39 +195,3 @@ A **JSON formatted collection** with statistics on the completed difPy process:
                                               "similar" : 0}}}
     "invalid_files" : {"count" : 230,
                        "logs" : {...}}}
-
-
-.. _Usage Examples:
-
-Usage Samples
-----------------
-
-III. Single Folder Search
-^^^^^^^^^^
-
-In this example we have a directory ``"C:/Users/Pictures/difPy Test"`` with the following folder structure:
-
-.. code-block:: console
-
-   .
-   |- Folder1
-   |  |- image1.jpg
-   |  |- ...
-   |  |- imageN.jpg   
-   |- Folder2
-   |  |- image1.jpg
-   |  |- ...
-   |  |- imageN.jpg   
-   |- image1.jpg
-   |- ...
-   |- imageN.jpg
-
-It contains 2 subdirectories `Folder1` and `Folder2` and a few images (in our example we have a total of 22 images that include 7 pairs of duplicates) 
-
-We can run the following command to run difPy on the folder:
-
-.. code-block:: console
-
-   dif = difPy.build("C:/Users/elise/Pictures/difPy Test - Copy", in_folder=False)
-   search = difPy.search(dif, similarity="duplicates")
-   search.result
