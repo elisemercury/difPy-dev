@@ -65,7 +65,7 @@ Folder paths can be specified as standalone Python strings, or within a list.
 recursive (bool)
 ^^^^^^^^^^^^
 
-By default, difPy will search for matching images recursively within the subdirectories of the subdirectories specified in the :ref:`directory` parameter. If set to ``False``, subdirectories will not be scanned.
+By default, difPy will search for matching images recursively within the subdirectories of the :ref:`directory` parameter. If set to ``False``, subdirectories will not be scanned.
 
 ``True`` = (default) searches recursively through all subdirectories in the directory paths
 
@@ -87,7 +87,7 @@ By default, difPy will search for matches in the union of all directories specif
 limit_extensions (bool)
 ^^^^^^^^^^^^
 
-By default, difPy only searched for images with a predefined filetype. This speeds up the process, since difPy does not have to attempt to decode files it might not support. Nonetheless, you can let difPy try to decode other file types by setting ``limit_extensions`` to ``False``.
+By default, difPy only searches for images with a predefined filetype. This speeds up the process, since difPy does not have to attempt to decode files it might not support. Nonetheless, you can let difPy try to decode other file types by setting ``limit_extensions`` to ``False``.
 
 .. note::
 
@@ -97,7 +97,7 @@ By default, difPy only searched for images with a predefined filetype. This spee
 
 ``False`` = difPy searches through all the input files
 
-difPy supports most popular image formats. Nevertheless, since it relies on the Pillow library for image decoding, the supported formats are restricted to the ones listed in the `Pillow Documentation`_. Unsupported file types will by marked as invalid and included in the :ref:`Process Statistics` output under ``invalid_files``.
+difPy supports most popular image formats. Nevertheless, since it relies on the Pillow library for image decoding, the supported formats are restricted to the ones listed in the `Pillow Documentation`_. Unsupported file types will by marked as invalid and included in the process statistics output under ``invalid_files`` (see :ref:`Process Statistics`).
 
 .. _Pillow Documentation: https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html
 
@@ -145,20 +145,20 @@ To skip the creation of stats, set ``logs`` to ``False``.
 difPy.search
 ------------
 
-After the ``dif object`` has been built using difPy.:ref:`difPy.build`, the search can be initiated with ``difPy.search()``. 
+After the ``dif`` object has been built using :ref:`difPy.build`, the search can be initiated with ``difPy.search``. 
 
-When invoking ``difPy.search()``, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
+When invoking ``difPy.search()``, difPy starts comparing the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate i. e. MSE value is set with the :ref:`similarity` parameter.
 
 After the search is completed, further actions can be performed using :ref:`search.move_to` and :ref:`search.delete`.
 
-`difPy.search` supports the following parameters:
+``difPy.search`` supports the following parameters:
 
 .. csv-table::
    :header: Parameter,Input Type,Default Value,Other Values
    :widths: 10, 10, 10, 20
    :class: tight-table
 
-   :ref:`difPy_obj`,"``difPy_obj``, ",,
+   :ref:`difPy_obj`,"``difPy_obj``",,
    :ref:`similarity`,"``str``, ``int``",``'duplicates'``, "``'similar'``, any ``int`` or ``float``"
    :ref:`show_progress`,``bool``,``True``,``False``
    :ref:`logs`,``bool``,``True``,``False``
@@ -172,14 +172,14 @@ After the search is completed, further actions can be performed using :ref:`sear
 difPy_obj
 ^^^^^^^^^^^^
 
-The required ``difPy_obj`` parameter should be pointing to the ``dif object`` that was built during the invocation of :ref:`difPy.build`. 
+The required ``difPy_obj`` parameter should be pointing to the ``dif`` object that was built during the invocation of :ref:`difPy.build`. 
 
 .. _similarity:
 
 similarity (str, int)
 ^^^^^^^^^^^^
 
-difPy compares the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate, or MSE value is set with the :ref:`similarity` parameter.
+difPy compares the images to find duplicates or similarities, based on the MSE (Mean Squared Error) between both image tensors. The target similarity rate i. e. MSE value is set with the ``similarity`` parameter.
 
 ``"duplicates"`` = (default) searches for duplicates. MSE threshold is set to ``0``.
 
@@ -187,9 +187,9 @@ difPy compares the images to find duplicates or similarities, based on the MSE (
 
 Depending on which use case you want to apply difPy for, the granularity for the classification of images can be adjusted.
 
-**Manual setting**: the match MSE threshold can be adjusted manually by setting ``similarity`` parameter to any ``int`` or ``float``. difPy will then search for images that match an MSE threshold **equal to or lower than** the one specified.
+**Manual setting**: the match MSE threshold can be adjusted manually by setting the ``similarity`` parameter to any ``int`` or ``float``. difPy will then search for images that match an MSE threshold **equal to or lower than** the one specified.
 
-When searching for **similar** images, the choice of MSE threshold becomes very important. A threshold of ``50`` will usually find similarities in regular photographs well, but if applied to images containing different texts with a plain white background, the MSE threshold of ``50`` will usually be too high and difPy will consider all images to be similar, even though they are not. In this case, for more precision, the ``py_size`` value should be lowered.
+When searching for **similar** images, the choice of MSE threshold becomes very important. A threshold of ``50`` will usually find similarities in regular photographs well, but if applied to images containing for example text with a plain white background, an MSE threshold of ``50`` will usually be too high and difPy will consider all images to be similar, even though they are not. In this case, for more precision, the ``similarity`` parameter should be lowered. Additionally, the ``px_size`` parameter can also be lowered to gain more precision (see :ref:`px_size`).
 
 .. _show_progress:
 
@@ -247,10 +247,6 @@ Directory of where the lower quality files should me moved. Should be given as P
 
 .. _search.delete:
 
-.. raw:: html
-
-   <hr>
-
 search.delete
 ------------
 
@@ -265,7 +261,7 @@ difPy can automatically delete the lower quality duplicate/similar images it fou
    import difPy
    dif = difPy.build("C:/Path/to/Folder_A/")
    search = difPy.search(dif)
-   search.delete()
+   search.delete(silent_del=False)
 
 .. code-block:: console
 

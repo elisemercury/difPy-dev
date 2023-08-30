@@ -8,20 +8,20 @@ FAQ
 What's new in v4?
 ----------------
 
-difPy version 4 is the next-generation version of difPy, which not only achieves **up to 10x the performance** compared to version 3.x, but also comes with a variety of **new features** that makes it's usage experience even better.
+difPy version 4 is the next-generation version of difPy, which not only achieves **up to 10x the performance** compared to version 3.x, but also comes with a variety of **new features** that make it's usage experience even better.
 
 **Splitting of Processes**
 
-difPy has been split into two main processes: first building the image repository with image tensors, and finally executing the search. This means that you will only have to build the image repository once, to then perform multi search tests on the same repository.
+difPy has been split into two main processes: first building the image repository with image tensors, and finally executing the search. This means that you will only have to build the image repository once, to then perform multiple search tests on the same repository.
 
-For example:
+For example, first we can build the ``dif`` object:
 
 .. code-block:: python
 
    import difPy
    dif = difPy.build("C:/Path/to/Folder/")
 
-And then I can perform two different searches on the same difPy repository:
+And then we can perform two different searches on the same difPy repository:
 
 .. code-block:: python
 
@@ -38,7 +38,7 @@ In a test on a folder containing 6k images, including 3k duplicates, difPy neede
 
 difPy now allows for searching for matches within folders separately, additionally to searching among the union of all images found. 
 
-To highlight was this means in an example: image a folder structure as shown below:
+To highlight what this means in an example. If we had a folder structure as shown below:
 
 .. code-block:: console
 
@@ -49,7 +49,7 @@ To highlight was this means in an example: image a folder structure as shown bel
     |  |-image2_1.jpeg
     |-image.jpeg
 
-We can run difPy with the  :ref:`in_folder` parameter set to ``True`` on this folder:
+We can run difPy on the main folder with the  :ref:`in_folder` parameter set to ``True``:
 
 .. code-block:: python
 
@@ -68,7 +68,7 @@ The difPy is now much more lightweight by depending less on external packages, a
 Supported File Types
 ----------------
 
-difPy supports most popular image formats. Nevertheless, since it relies on the Pillow library for image decoding, the supported formats are restricted to the ones listed in the `Pillow Documentation`_. Unsupported file types will by marked as invalid and included in the :ref:`Process Statistics` output under ``invalid_files``.
+difPy supports most popular image formats. Nevertheless, since it relies on the Pillow library for image decoding, the supported formats are restricted to the ones listed in the `Pillow Documentation`_. Unsupported file types will by marked as invalid and included in the process statistics output under ``invalid_files`` (see :ref:`Process Statistics`).
 
 .. _Pillow Documentation: https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html
 
