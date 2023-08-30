@@ -23,7 +23,7 @@ View difPy on `PyPi <https://pypi.org/project/difPy/>`_.
 Basic Usage
 ----------------
 
-difPy supports searching for duplicate and similar images within a single or multiple directories. difPy first needs to be initialized and build its image repository with :ref:`difPy.build`. After the ``dif object`` had been created, by applying :ref:`difPy.search``, difPy starts the search for matching images. 
+difPy supports searching for duplicate and similar images within a single or multiple directories. difPy first needs to be initialized and build its image repository with :ref:`difPy.build`. After the ``dif`` object had been created, by invoking :ref:`difPy.search`, difPy starts the search for matching images. 
 
 Single Folder Search
 ^^^^^^^^^^
@@ -58,9 +58,9 @@ or add a ``list`` of folders:
 
 Folder paths must be specified as either standalone Python strings, or in a Python list. 
 
-difPy can search for duplicates in the union of all folders, or only among the folders and subdirectories itself. See :ref:`Usage Samples`.
+difPy can search for duplicates in the union of all folders, or only among the folders and subdirectories itself. See :ref:`in_folder`.
 
-By default, starting with v4.x, difPy uses **multiprocessing** for both the build and the search process.
+difPy leverages **multiprocessing** for both the build and the search process.
 
 .. _cli_usage:
 
@@ -81,7 +81,7 @@ difPy can be invoked through a CLI interface by using the following commands:
 
    Windows users can add difPy to their `PATH system variables <https://www.computerhope.com/issues/ch000549.htm>`_ by pointing it to their difPy package installation folder containing the `difPy.bat <https://github.com/elisemercury/Duplicate-Image-Finder/difPy/difPy.bat>`_ file. This adds ``difPy`` as a command in the CLI and will allow direct invocation of difPy from anywhere on the machine. The default difPy installation folder will look similar to ``C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\difPy`` (Windows 11).
 
-It supports the following arguments:
+difPy in the CLI supports the following arguments:
 
 .. code-block:: python
    
@@ -118,7 +118,7 @@ The output of difPy is written to files and **saved in the working directory** b
 Output
 ----------------
 
-difPy returns various types of output that you may use depending on your use case:
+difPy returns various types of output:
 
 I. Search Result Dictionary
 ^^^^^^^^^^
@@ -153,13 +153,13 @@ A **JSON formatted collection** of duplicates/similar images that have the **low
 
 To find the lower quality images, difPy compares all image file sizes within a match group and selects all images that have lowest image file size among the group.
 
-Lower quality images then can be **moved** to a different location:
+Lower quality images then can be **moved** to a different location (see :ref:`search.ove_to`):
 
 .. code-block:: python
    
    search.move_to(search, destination_path="C:/Path/to/Destination/")
 
-Or **deleted**:
+Or **deleted** (see :ref:`search.delete`):
 
 .. code-block:: python
 
