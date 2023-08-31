@@ -37,7 +37,8 @@ dif = difPy.build(["C:/Path/to/FolderA/", "C:/Path/to/FolderB/", "C:/Path/to/Fol
 search = difPy.search(dif)
 ``` 
 
-Folder paths can be specified as standalone Python strings, or within a list. `difPy.build()` first builds a collection of images by scanning the provided folders and generating image tensors. `difPy.search()` then starts the search for duplicate image.
+Folder paths can be specified as standalone Python strings, or within a list. With `difPy.build()`, difPy first scans the images in the provided folders and builds a collection of images by generating image tensors. `difPy.search()` then starts the search for duplicate images.
+
 ## Output
 difPy returns various types of output that you may use depending on your use case: 
 
@@ -59,7 +60,7 @@ search.result
 ``` 
 
 ### II. Lower Quality Files
-A **JSON formatted** list of duplicates/similar images that have the **lowest quality** among match groups: 
+A **JSON formatted collection** of duplicates/similar images that have the **lowest quality** among match groups: 
 
 ```python
 search.lower_quality
@@ -133,13 +134,14 @@ python dif.py -D "C:/Path/to/Folder_A/" "C:/Path/to/Folder_B/" "C:/Path/to/Folde
 difPy CLI supports the following arguments:
 
 ```python
-dif.py [-h] [-D DIRECTORY] [-Z OUTPUT_DIRECTORY] [-r {True,False}] 
-       [-s SIMILARITY] [-px PX_SIZE] [-mv MOVE_TO] [-le {True,False}] 
-       [-p {True,False}] [-d {True,False}] [-sd {True,False}] 
+dif.py [-h] [-D DIRECTORY [DIRECTORY ...]] [-Z OUTPUT_DIRECTORY] 
+       [-r {True,False}] [-i {True,False}] [-le {True,False}] 
+       [-px PX_SIZE] [-p {True,False}] [-s SIMILARITY] 
+       [-mv MOVE_TO] [-d {True,False}] [-sd {True,False}] 
        [-l {True,False}]
 ```
 
-When no directory parameter is given in the CLI, difPy will **run on the current working directory**.
+If no directory parameter is given in the CLI, difPy will **run on the current working directory**.
 
 When running from the CLI, the output of difPy is written to files and **saved in the working directory** by default. To change the default output directory, specify the `-Z / -output_directory` parameter. The "xxx" in the output filenames is the current timestamp:
 

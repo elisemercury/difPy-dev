@@ -21,7 +21,7 @@ For example, first we can build the ``dif`` object:
    import difPy
    dif = difPy.build("C:/Path/to/Folder/")
 
-And then we can perform two different searches on the same difPy repository:
+And then we can perform two different searches on the same ``dif`` object:
 
 .. code-block:: python
 
