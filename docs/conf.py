@@ -32,8 +32,11 @@ templates_path = ['_templates']
 
 html_theme = 'sphinx_rtd_theme'
 
-# -- Options for EPUB output
-epub_show_urls = 'footnote'
+# -- Options for output
+formats:
+  - epub
+  - pdf
+
 
 def setup(app):
    app.add_css_file('static/css/custom.css')
