@@ -130,7 +130,7 @@ By default, difPy will show a progress bar of the running process.
 ``False`` = disables the progress bar
 
 .. _processes:
-
+ 
 processes (int)
 ^^^^^^^^^^^^
 
