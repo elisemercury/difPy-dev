@@ -15,6 +15,9 @@ difPy searches for images in **one or more different folders**, compares the ima
 
 difPy does not compare images based on their hashes. It compares them based on their tensors i. e. the image content - this allows difPy to **not only search for duplicate images, but also for similar images**.
 
+difPy leverages Python's **multiprocessing capabilities** and is therefore able to perform at high performance even on large datasets. 
+
+
 ## Table of Contents
 1. [Basic Usage](https://github.com/elisemercury/Duplicate-Image-Finder#basic-usage)
 2. [Output](https://github.com/elisemercury/Duplicate-Image-Finder#output)
@@ -26,14 +29,14 @@ To make difPy search for duplicates **within one folder**:
 
 ```python
 import difPy
-dif = difPy.build("C:/Path/to/Folder/")
+dif = difPy.build('C:/Path/to/Folder/')
 search = difPy.search(dif)
 ``` 
 To search for duplicates **within multiple folders**:
 
 ```python
 import difPy
-dif = difPy.build(["C:/Path/to/FolderA/", "C:/Path/to/FolderB/", "C:/Path/to/FolderC/",...])
+dif = difPy.build(['C:/Path/to/FolderA/', 'C:/Path/to/FolderB/', 'C:/Path/to/FolderC/',...])
 search = difPy.search(dif)
 ``` 
 
@@ -49,31 +52,28 @@ A **JSON formatted collection** of duplicates/similar images (i. e. **match grou
 search.result
 
 > Output:
-{20220819171549 : {"location" : "C:/Path/to/Image/image1.jpg",
-                   "matches" : {30270813251529 : "location": "C:/Path/to/Image/matched_image1.jpg",
-                                                 "mse": 0.0},
-                               {72214282557852 : "location": "C:/Path/to/Image/matched_image2.jpg",
-                                                 "mse": 0.0},
-                   ... }
+{'C:/Path/to/Image/image1.jpg' : [['C:/Path/to/Image/duplicate_image1a.jpg', 0.0], 
+                                  ['C:/Path/to/Image/duplicate_image1b.jpg', 0.0]],
+ 'C:/Path/to/Image/image2.jpg' : [['C:/Path/to/Image/duplicate_image2a.jpg', 0.0]],
  ...
 }
 ``` 
 
 ### II. Lower Quality Files
-A **JSON formatted collection** of duplicates/similar images that have the **lowest quality** among match groups: 
+A **list** of duplicates/similar images that have the **lowest quality** among match groups: 
 
 ```python
 search.lower_quality
 
 > Output:
-{"lower_quality" : ["C:/Path/to/Image/duplicate_image1.jpg", 
-                    "C:/Path/to/Image/duplicate_image2.jpg", ...]}
+['C:/Path/to/Image/duplicate_image1.jpg', 
+ 'C:/Path/to/Image/duplicate_image2.jpg', ...]
 ``` 
 
 Lower quality images then can be **moved to a different location**:
 
 ```python
-search.move_to(search, destination_path="C:/Path/to/Destination/")
+search.move_to(search, destination_path='C:/Path/to/Destination/')
 ```
 Or **deleted**:
 
@@ -89,35 +89,40 @@ A **JSON formatted collection** with statistics on the completed difPy processes
 search.stats
 
 > Output:
-{"directory" : ("C:/Path/to/Folder_A/", "C:/Path/to/Folder_B/", ... ),
- "process" : {"build" : {"duration" : {"start" : "2023-08-28T21:22:48.691008",
-                                       "end" : "2023-08-28T21:23:59.104351",
-                                       "seconds_elapsed" : "70.4133"},
-                         "parameters" : {"recursive" : True,
-                                         "in_folder" : False,
-                                         "limit_extensions" : True,
-                                         "px_size" : 50}},
-              "search" : {"duration" : {"start" : "2023-08-28T21:23:59.106351",
-                                        "end" : "2023-08-28T21:25:17.538015",
-                                        "seconds_elapsed" : "78.4317"},
-                          "parameters" : {"similarity_mse" : 0}
-                          "files_searched" : 5225,
-                          "matches_found" : {"duplicates" : 5,
-                                             "similar" : 0}}}
- "invalid_files" : {"count" : 230,
-                    "logs" : {...}}}
+{'directory': ['C:/Path/to/Folder_A/', 'C:/Path/to/Folder_B/', ... ],
+ 'process': {'build': {'duration': {'start': '2024-02-18T19:52:39.479548',
+                                    'end': '2024-02-18T19:52:41.630027',
+                                    'seconds_elapsed': 2.1505},
+                       'parameters': {'recursive': True,
+                                      'in_folder': False,
+                                      'limit_extensions': True,
+                                      'px_size': 50,
+                                      'processes': 5},
+                       'total_files': {'count': 3232},
+                       'invalid_files': {'count': 0, 
+                                         'logs': {}}},
+             'search': {'duration': {'start': '2024-02-18T19:52:41.630027',
+                                     'end': '2024-02-18T19:52:46.770077',
+                                     'seconds_elapsed': 5.14},
+                        'parameters': {'similarity_mse': 0,
+                                       'rotate': True,
+                                       'lazy': True,
+                                       'processes': 5,
+                                       'chunksize': None},
+                    'files_searched': 3232,
+                    'matches_found': {'duplicates': 3030, 
+                                      'similar': 0}}}}
 ```
 
 ## Additional Parameters
 difPy supports the following parameters:
 
 ```python
-difPy.build(*directory, recursive=True, in_folder=False, limit_extensions=True, 
-            px_size=50, show_progress=False, logs=True)
+difPy.build(*directory, recursive=True, in_folder=False, limit_extensions=True, px_size=50, show_progress=True, processes=5)
 ```
 
 ```python
-difPy.search(difpy_obj, similarity='duplicates', show_progress=False, logs=True)
+difPy.search(difpy_obj, similarity='duplicates', rotate=True, lazy=True, show_progress=True, processes=5, chunksize=None)
 ```
 
 ## CLI Usage
@@ -126,9 +131,9 @@ difPy can also be invoked through the CLI by using the following commands:
 ```python
 python dif.py #working directory
 
-python dif.py -D "C:/Path/to/Folder/"
+python dif.py -D 'C:/Path/to/Folder/'
 
-python dif.py -D "C:/Path/to/Folder_A/" "C:/Path/to/Folder_B/" "C:/Path/to/Folder_C/"
+python dif.py -D 'C:/Path/to/Folder_A/' 'C:/Path/to/Folder_B/' 'C:/Path/to/Folder_C/'
 ```
 
 difPy CLI supports the following arguments:
@@ -136,9 +141,10 @@ difPy CLI supports the following arguments:
 ```python
 dif.py [-h] [-D DIRECTORY [DIRECTORY ...]] [-Z OUTPUT_DIRECTORY] 
        [-r {True,False}] [-i {True,False}] [-le {True,False}] 
-       [-px PX_SIZE] [-p {True,False}] [-s SIMILARITY] 
-       [-mv MOVE_TO] [-d {True,False}] [-sd {True,False}] 
-       [-l {True,False}]
+       [-px PX_SIZE]  [-s SIMILARITY] [-ro {True,False}]
+       [-la {True,False}] [-proc PROCESSES] [-ch CHUNKSIZE] 
+       [-mv MOVE_TO] [-d {True,False}] [-sd {True,False}]
+       [-p {True,False}]
 ```
 
 If no directory parameter is given in the CLI, difPy will **run on the current working directory**.

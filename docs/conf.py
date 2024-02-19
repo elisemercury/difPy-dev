@@ -18,6 +18,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx_rtd_theme',
+    'sphinxcontrib.googleanalytics',
 ]
 
 intersphinx_mapping = {
